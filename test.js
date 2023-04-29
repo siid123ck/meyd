@@ -1,4 +1,6 @@
 // const jobs = require('./data/jobs')
-import jobs from './data/jobs.js'
+let data = [2,4,5]
 
-console.log(jobs)
+const data1 = data.find(item=>item===4)
+
+console.log(data1)

@@ -1,4 +1,4 @@
-const jobs = [
+let jobs = [
     {
       id: 1,
       firstName: 'John',
@@ -12,6 +12,7 @@ const jobs = [
       images: ['image1.jpg', 'image2.jpg'],
       description: 'I need a shirt tailored.',
       budget: '100',
+      status:'open'
     },
     {
       id: 2,
@@ -26,6 +27,7 @@ const jobs = [
       images: ['image3.jpg'],
       description: 'I need a dress hemmed.',
       budget: '75',
+      status:'open'
     },
     {
       id: 3,
@@ -40,6 +42,7 @@ const jobs = [
       images: ['image4.jpg', 'image5.jpg'],
       description: 'I need a suit tailored.',
       budget: '200',
+      status:'open'
     },
     {
       id: 4,
@@ -54,6 +57,7 @@ const jobs = [
       images: ['image6.jpg'],
       description: 'I need pants hemmed.',
       budget: '50',
+      status:'open'
     },
     {
       id: 5,
@@ -68,6 +72,7 @@ const jobs = [
       images: ['image7.jpg'],
       description: 'I need a shirt altered.',
       budget: '75',
+      status:'open'
     },
     {
       id: 6,
@@ -82,6 +87,7 @@ const jobs = [
       images: ['image8.jpg', 'image9.jpg'],
       description: 'I need a dress altered.',
       budget: '150',
+      status:'open'
     },
     {
       id: 7,
@@ -96,6 +102,22 @@ const jobs = [
       images: ['image10.jpg'],
       description: 'I need a suit altered.',
       budget: '100',
+      status:'open'
+    },
+    {
+      id: 8,
+      firstName: 'Sran',
+      lastName: 'Brown',
+      phone: '555-355-5555',
+      email: 'sran.brown@example.com',
+      address: '13 Collins St',
+      postcode: '2000',
+      state: 'NSW',
+      clothingType: 'Kurta',
+      images: ['image11.jpg'],
+      description: 'I need a Kurta altered.',
+      budget: '400',
+      status:'accepted'
     }
 ]
 

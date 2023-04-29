@@ -11,11 +11,41 @@ router.route('/').get((req, res)=>{
 })
 
 router.route('/').post((req, res)=>{
-    console.log(req.body)
     jobs.push(req.body)
     res.json({
         status:'success',
-        result:req.body
+        result:jobs
+    })
+})
+
+router.route('/:id').get((req, res)=>{
+    const jobId = req.params.id;
+    const job = jobs.find(job=>job.id==jobId)
+    if (!job) {
+        // If the job with the given ID is not found, send an error response
+        res.status(404).json({
+          status: 'error',
+          message: 'Job not found',
+        });
+      } else {
+        // If the job with the given ID is found, send a success response with the job object
+        res.json({
+          status: 'success',
+          result: job,
+        });
+      }
+})
+
+router.route('/:id').put((req, res)=>{
+    const newStatus = req.body.status;
+    const jobId = req.params.id;
+    let updatedJob = jobs.find(job=>job.id==jobId);
+    updatedJob.status = newStatus;
+    console.log(updatedJob)
+    
+    res.json({
+        status:'success',
+        result:updatedJob
     })
 })
 
