@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const makerSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
@@ -23,4 +23,5 @@ const makerSchema = new mongoose.Schema({
   numberOfRatings: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.model('Maker', makerSchema);
+const Maker = mongoose.model('Maker', makerSchema);
+export default Maker;

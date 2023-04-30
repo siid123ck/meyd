@@ -1,15 +1,15 @@
 import express from 'express';
 import jobs from '../data/jobs.js'
-const router = express.Router();
+const jobRouter = express.Router();
 
-router.route('/').get((req, res)=>{
+jobRouter.route('/').get((req, res)=>{
     res.json({
         status:'success',
         result:jobs
     })
 })
 
-router.route('/').post((req, res)=>{
+jobRouter.route('/').post((req, res)=>{
     jobs.push(req.body)
     res.json({
         status:'success',
@@ -17,7 +17,7 @@ router.route('/').post((req, res)=>{
     })
 })
 
-router.route('/:id').get((req, res)=>{
+jobRouter.route('/:id').get((req, res)=>{
     const jobId = req.params.id;
     const job = jobs.find(job=>job.id==jobId)
     if (!job) {
@@ -35,7 +35,7 @@ router.route('/:id').get((req, res)=>{
       }
 })
 
-router.route('/:id').put((req, res)=>{
+jobRouter.route('/:id').put((req, res)=>{
     const newStatus = req.body.status;
     const jobId = req.params.id;
     let updatedJob = jobs.find(job=>job.id==jobId);
@@ -48,4 +48,4 @@ router.route('/:id').put((req, res)=>{
     })
 })
 
-export default router
+export default jobRouter
