@@ -6,7 +6,10 @@ const consumerRouter = express.Router();
 // Get: list all consumer
 consumerRouter.get('/', asyncHandler(async(req, res)=>{
     const consumers = await Consumer.find();
-    res.json(consumers);
+    res.json({
+        status:'success',
+        result:consumers
+    });
 }))
 
 // POST: add new consumer

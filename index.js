@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import jobRouter from './routes/jobRouter.js';
 import consumerRouter from './routes/consumerRouter.js';
 import './config/db.js'
+import makerRouter from './routes/MakerRoute.js';
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/jobs', jobRouter)
-app.use('/consumers', consumerRouter)
+app.use('/consumers', consumerRouter);
+app.use('/makers', makerRouter);
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');

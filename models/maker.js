@@ -9,16 +9,7 @@ const makerSchema = new mongoose.Schema({
   address: { type: String, required: true },
   postcode: { type: String, required: true },
   state: { type: String, required: true },
-  atelier: { type: String, required: true },
   bio: { type: String },
-  profilePic: { type: String },
-  portfolio: [
-    {
-      title: { type: String, required: true },
-      description: { type: String },
-      image: { type: String, required: true }
-    }
-  ],
   rating: { type: Number, default: 0 },
   numberOfRatings: { type: Number, default: 0 }
 });
