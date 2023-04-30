@@ -1,6 +1,5 @@
 import express from 'express';
-import jobs from '../data/jobs.js';
-
+import jobs from '../data/jobs.js'
 const router = express.Router();
 
 router.route('/').get((req, res)=>{
