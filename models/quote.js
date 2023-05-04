@@ -17,6 +17,10 @@ const quoteSchema = new mongoose.Schema({
   },
   comments: {
     type: String
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'accepted', 'rejected']
   }
 }, { timestamps: true });
 

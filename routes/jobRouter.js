@@ -1,25 +1,29 @@
 import express from 'express';
-import jobs from '../data/jobs.js'
+import asyncHandler from 'express-async-handler'
+import { authAllUsers, authConsumer } from '../controller/auth.js';
+import Job from '../models/Job.js';
 const jobRouter = express.Router();
 
-jobRouter.route('/').get((req, res)=>{
+jobRouter.route('/').get(authAllUsers, asyncHandler( async(req, res)=>{
+  const jobs = await Job.find();
     res.json({
         status:'success',
         result:jobs
     })
-})
+}))
 
-jobRouter.route('/').post((req, res)=>{
+jobRouter.route('/').post(authConsumer, asyncHandler(async (req, res)=>{
+  const jobs = await Job.find();
     jobs.push(req.body)
     res.json({
         status:'success',
         result:jobs
     })
-})
+}))
 
-jobRouter.route('/:id').get((req, res)=>{
+jobRouter.route('/:id').get(authAllUsers, asyncHandler (async(req, res)=>{
     const jobId = req.params.id;
-    const job = jobs.find(job=>job.id==jobId)
+    const job = Job.findById(jobId)
     if (!job) {
         // If the job with the given ID is not found, send an error response
         res.status(404).json({
@@ -33,19 +37,19 @@ jobRouter.route('/:id').get((req, res)=>{
           result: job,
         });
       }
-})
+}))
 
-jobRouter.route('/:id').put((req, res)=>{
+jobRouter.route('/:id').put(authConsumer, asyncHandler(async(req, res)=>{
     const newStatus = req.body.status;
     const jobId = req.params.id;
-    let updatedJob = jobs.find(job=>job.id==jobId);
-    updatedJob.status = newStatus;
-    console.log(updatedJob)
+    let job = Job.findById(jobId)
+    job.status = newStatus;
+    
     
     res.json({
         status:'success',
-        result:updatedJob
+        result:job
     })
-})
+}))
 
 export default jobRouter

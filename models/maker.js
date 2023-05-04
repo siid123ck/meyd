@@ -17,14 +17,13 @@ const makerSchema = new mongoose.Schema({
 
 // Hash password before saving to database
 makerSchema.pre('save', async function(next) {
-    const maker = this;
-    if (!maker.isModified('password')) {
+    if (!this.isModified('password')) {
       return next();
     }
     try {
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(maker.password, salt);
-      maker.password = hashedPassword;
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      this.password = hashedPassword;
       next();
     } catch (error) {
       next(error);

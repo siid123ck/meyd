@@ -2,14 +2,14 @@ import Maker from "../models/maker.js";
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
-import jwt from "jsonwebtoken";
-import authMaker from "../controller/authMaker.js";
+import {authAdmin, authMaker} from "../controller/auth.js";
 const makerRouter = express.Router();
 
 
 // Get: list all makers
-makerRouter.get('/', authMaker, asyncHandler(async(req, res)=>{
+makerRouter.get('/', asyncHandler(async(req, res)=>{
     const makers = await Maker.find();
+    
     res.json({
         status:'success',
         result:makers
@@ -19,7 +19,11 @@ makerRouter.get('/', authMaker, asyncHandler(async(req, res)=>{
 // Get: create maker 
 makerRouter.post('/', asyncHandler(async (req, res) => {
     const { firstName, lastName, email, password, phone, address, postcode, state, bio } = req.body;
-  
+    const existingMaker = await Maker.findOne({email}); 
+   
+    if(existingMaker){
+      return res.status(400).send('Username already exist')
+    }
     const maker = new Maker({
       firstName,
       lastName,
@@ -43,19 +47,16 @@ makerRouter.post('/', asyncHandler(async (req, res) => {
 
   makerRouter.post('/login', asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-  
-    // Find the maker with the given email
-    const maker = await Maker.findOne({ email });
-  
-    // If maker is not found or password does not match, return error
-    if (!maker || !await bcrypt.compare(password, maker.password)) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+    const maker = await Maker.findOne({email});
+    if(!maker) {
+    return res.end('Invalid maker');
     }
-  
-    // Create a JWT token with the maker ID as payload
-    const token = jwt.sign({ makerId: maker._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  
-    res.json({ token });
+    
+    const isMatch = await bcrypt.compare(password, maker.password); 
+    if(isMatch){
+      req.session.maker = maker;
+    }
+    res.send('success');
   }));
   
   // Protected route for getting a single maker
@@ -65,13 +66,13 @@ makerRouter.get('/:id', authMaker, asyncHandler(async (req, res) => {
   }));
   
   // Protected route for updating a maker
-  makerRouter.put('/:id', authMaker, asyncHandler(async (req, res) => {
+  makerRouter.put('/:id', authAdmin, asyncHandler(async (req, res) => {
     const maker = await Maker.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(maker);
   }));
     
   // Protected route for deleting a maker
-  makerRouter.delete('/:id', authMaker, asyncHandler(async (req, res) => {
+  makerRouter.delete('/:id', authAdmin, asyncHandler(async (req, res) => {
     await Maker.findByIdAndDelete(req.params.id);
     res.json({ message: 'Maker deleted successfully' });
   }));

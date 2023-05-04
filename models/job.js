@@ -30,24 +30,11 @@ const jobSchema = new mongoose.Schema({
     enum: ['open', 'in progress', 'completed'],
     default: 'open'
   },
-  makers: [{
-    maker: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Maker',
-      required: true
-    },
-    price: {
-      type: Number,
-      required: true
-    },
-    comments: {
-      type: String
-    },
-    status: {
-      type: String,
-      enum: ['pending', 'accepted', 'rejected']
-    }
+  quotes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Quote'
   }]
+  
 }, {
   timestamps: true
 });
