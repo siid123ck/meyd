@@ -7,6 +7,7 @@ import jobRouter from './routes/jobRouter.js';
 import consumerRouter from './routes/consumerRouter.js';
 import './config/db.js'
 import makerRouter from './routes/MakerRoute.js';
+import quoteRouter from './routes/quoatesRouter.js';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
 
 app.get('/', (req, res) => {
-  res.json('Hello World from siid!');
+  res.json('Hello World from siid!'); 
 });
 
 app.get('/auth/logout', (req, res)=>{
@@ -40,7 +41,9 @@ app.get('/auth/login', (req, res)=>{
 app.use('/jobs', jobRouter)
 app.use('/consumers', consumerRouter);
 app.use('/makers', makerRouter);
+app.use('/quotes', quoteRouter);
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');
 });
+

@@ -12,7 +12,7 @@ const quoteSchema = new mongoose.Schema({
     required: true
   },
   price: {
-    type: Number,
+    type: Number,  
     required: true
   },
   comments: {
@@ -26,4 +26,4 @@ const quoteSchema = new mongoose.Schema({
 
 const Quote = mongoose.model('Quote', quoteSchema);
 
-module.exports = Quote;
+export default  Quote;

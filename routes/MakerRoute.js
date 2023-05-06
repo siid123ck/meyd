@@ -60,15 +60,21 @@ makerRouter.post('/', asyncHandler(async (req, res) => {
   }));
   
   // Protected route for getting a single maker
-makerRouter.get('/:id', authMaker, asyncHandler(async (req, res) => {
+makerRouter.get('/:id', asyncHandler(async (req, res) => {
     const maker = await Maker.findById(req.params.id);
-    res.json(maker);
+    res.json({
+      status:'success',
+      result:maker
+    });
   }));
   
   // Protected route for updating a maker
   makerRouter.put('/:id', authAdmin, asyncHandler(async (req, res) => {
     const maker = await Maker.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(maker);
+    res.json({
+      status:'success',
+      result:maker
+    });
   }));
     
   // Protected route for deleting a maker
