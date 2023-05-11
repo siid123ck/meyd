@@ -3,10 +3,10 @@ import mongoose from 'mongoose'
 const jobSchema = new mongoose.Schema({
   consumer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Consumer',
+    ref: 'User',
     required: true
   },
-  clothingType: {
+  clothingType: { 
     type: String,
     required: true
   },
@@ -20,10 +20,6 @@ const jobSchema = new mongoose.Schema({
   },
   budget: {
     type: Number
-  },
-  location: {
-    type: String,
-    required: true
   },
   status: {
     type: String,

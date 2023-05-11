@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const quoteSchema = new mongoose.Schema({
   maker: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Maker',
+    ref: 'User',
     required: true
   },
   job: {

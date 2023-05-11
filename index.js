@@ -1,47 +1,27 @@
 import express from 'express'
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import session from 'express-session';
 import jobRouter from './routes/jobRouter.js';
-import consumerRouter from './routes/consumerRouter.js';
 import './config/db.js'
-import makerRouter from './routes/MakerRoute.js';
-import quoteRouter from './routes/quoatesRouter.js';
+import quoteRouter from './routes/quotesRouter.js';
+import userRouter from './routes/user.js';
+import authRouter from './routes/auth.js';
 
 const app = express();
 
-app.use(session({
-  secret: 'dijkf',
-  resave: false,
-  saveUninitialized: false,
-}));
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
 
 app.get('/', (req, res) => {
-  res.json('Hello World from siid!'); 
+  res.json('Hello World from si!'); 
 });
 
-app.get('/auth/logout', (req, res)=>{
-  if(req.session.maker) delete req.session.maker; 
-  else if(req.session.consumer) delete req.session.consumer;
-  else {
-    res.redirect('/');
-  }
-})
-
-app.get('/auth/login', (req, res)=>{
-  res.send('Please login using user details')
-})
-
-
 app.use('/jobs', jobRouter)
-app.use('/consumers', consumerRouter);
-app.use('/makers', makerRouter);
+app.use('/users', userRouter);
 app.use('/quotes', quoteRouter);
+app.use('/auth', authRouter);
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');
